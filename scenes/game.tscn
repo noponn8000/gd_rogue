@@ -1,0 +1,166 @@
+[gd_scene load_steps=21 format=3 uid="uid://d0m08652h5nbj"]
+
+[ext_resource type="Texture2D" uid="uid://bt8ur8y2ejchj" path="res://assets/sprites/basic_gravel_tile.png" id="1_jgrko"]
+[ext_resource type="Script" path="res://scripts/map.gd" id="2_wj61d"]
+[ext_resource type="Texture2D" uid="uid://cebyx8mvrcyhe" path="res://assets/sprites/player.png" id="3_0vvrv"]
+[ext_resource type="Texture2D" uid="uid://d18bhtfqx87w" path="res://assets/sprites/chest.png" id="4_7kcao"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="4_knnal"]
+[ext_resource type="Script" path="res://scripts/entity.gd" id="4_teodf"]
+[ext_resource type="Texture2D" uid="uid://w8v8kkhnp047" path="res://assets/sprites/bush.png" id="5_k2opu"]
+[ext_resource type="Texture2D" uid="uid://du27rur32araa" path="res://assets/sprites/light_plant.png" id="6_xkxs7"]
+[ext_resource type="Texture2D" uid="uid://c450fn255m8er" path="res://assets/sprites/shroom.png" id="7_5txac"]
+[ext_resource type="Texture2D" uid="uid://owjh2q2jv4gb" path="res://assets/sprites/campfire.png" id="10_3yaav"]
+[ext_resource type="Texture2D" uid="uid://mnmq5l1bx7e3" path="res://assets/sprites/reticle.png" id="11_qalg8"]
+[ext_resource type="Script" path="res://scripts/reticle.gd" id="12_cdjpu"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yvj45"]
+texture = ExtResource("1_jgrko")
+0:0/0 = 0
+0:0/0/z_index = -10
+
+[sub_resource type="TileSet" id="TileSet_na05l"]
+sources/0 = SubResource("TileSetAtlasSource_yvj45")
+
+[sub_resource type="Animation" id="Animation_6rc6o"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_xsh7a"]
+resource_name = "default"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j8i5t"]
+_data = {
+"RESET": SubResource("Animation_6rc6o"),
+"default": SubResource("Animation_xsh7a")
+}
+
+[sub_resource type="Animation" id="Animation_78pra"]
+resource_name = "default"
+length = 0.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_jyokb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4ecem"]
+_data = {
+"RESET": SubResource("Animation_jyokb"),
+"default": SubResource("Animation_78pra")
+}
+
+[node name="Game" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_na05l")
+format = 2
+layer_0/tile_data = PackedInt32Array(65535, 0, 0, 0, 0, 0, 1, 0, 0, -65535, 0, 0, -65536, 0, 0, -1, 0, 0, 65534, 0, 0, -2, 0, 0, -65538, 0, 0, -65537, 0, 0, -131072, 0, 0, -131071, 0, 0, -131070, 0, 0, -65534, 0, 0, 2, 0, 0, 65537, 0, 0, 65536, 0, 0, 131071, 0, 0, 131070, 0, 0, 131069, 0, 0, 65533, 0, 0, -3, 0, 0, -65539, 0, 0, -131075, 0, 0, -131074, 0, 0, -131073, 0, 0, -196608, 0, 0, -196607, 0, 0, -196606, 0, 0, 65538, 0, 0, 131075, 0, 0, 131074, 0, 0, 131073, 0, 0, 131072, 0, 0, 196607, 0, 0, 196606, 0, 0, 196605, 0, 0, 196604, 0, 0, 131068, 0, 0, 65532, 0, 0, -4, 0, 0, -65540, 0, 0, -131076, 0, 0, -196612, 0, 0, -196611, 0, 0, -196610, 0, 0, -196609, 0, 0, -262144, 0, 0, -262143, 0, 0, -262142, 0, 0, -262141, 0, 0, -196605, 0, 0, -131069, 0, 0, -65533, 0, 0, 3, 0, 0, 65539, 0, 0, 262140, 0, 0, 262141, 0, 0, 262142, 0, 0, 262143, 0, 0, 196608, 0, 0, 196609, 0, 0, 196610, 0, 0, 196611, 0, 0, -262140, 0, 0, -196604, 0, 0, -131068, 0, 0, -65532, 0, 0, 4, 0, 0, 65540, 0, 0, 131076, 0, 0, 196612, 0, 0, 262139, 0, 0, 196603, 0, 0, 131067, 0, 0, 65531, 0, 0, -5, 0, 0, -65541, 0, 0, -131077, 0, 0, -196613, 0, 0, 327674, 0, 0, 327675, 0, 0, 327676, 0, 0, 327677, 0, 0, 327678, 0, 0, 327679, 0, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 196613, 0, 0, 131077, 0, 0, 65541, 0, 0, 5, 0, 0, -65531, 0, 0, -131067, 0, 0, -196603, 0, 0, -262139, 0, 0, -327675, 0, 0, -327676, 0, 0, -327677, 0, 0, -327678, 0, 0, -327679, 0, 0, -327680, 0, 0, -262145, 0, 0, -262146, 0, 0, -262147, 0, 0, -262148, 0, 0, -262149, 0, 0, -262150, 0, 0, -196614, 0, 0, -131078, 0, 0, -131079, 0, 0, -65543, 0, 0, -7, 0, 0, 65529, 0, 0, 131065, 0, 0, 131066, 0, 0, 196602, 0, 0, 262138, 0, 0, 327673, 0, 0, 262137, 0, 0, 196601, 0, 0, 65530, 0, 0, -6, 0, 0, -65542, 0, 0, -196615, 0, 0, -262151, 0, 0, -327674, 0, 0, -262138, 0, 0, -196602, 0, 0, -131066, 0, 0, -65530, 0, 0, 6, 0, 0, 65542, 0, 0, 131078, 0, 0, 196614, 0, 0, 262150, 0, 0)
+script = ExtResource("2_wj61d")
+bounds_x = null
+bounds_y = null
+
+[node name="Player" type="Sprite2D" parent="TileMap"]
+texture = ExtResource("3_0vvrv")
+centered = false
+script = ExtResource("4_knnal")
+
+[node name="Chest" type="Sprite2D" parent="TileMap"]
+position = Vector2(32, 16)
+texture = ExtResource("4_7kcao")
+centered = false
+script = ExtResource("4_teodf")
+
+[node name="Bush" type="Sprite2D" parent="TileMap"]
+position = Vector2(64, -16)
+texture = ExtResource("5_k2opu")
+centered = false
+script = ExtResource("4_teodf")
+
+[node name="LightPlant" type="Sprite2D" parent="TileMap"]
+position = Vector2(-64, -48)
+texture = ExtResource("6_xkxs7")
+centered = false
+script = ExtResource("4_teodf")
+
+[node name="Shroom" type="Sprite2D" parent="TileMap"]
+position = Vector2(64, 48)
+texture = ExtResource("7_5txac")
+centered = false
+script = ExtResource("4_teodf")
+
+[node name="Campfire" type="Sprite2D" parent="TileMap"]
+position = Vector2(-48, 32)
+texture = ExtResource("10_3yaav")
+centered = false
+hframes = 3
+script = ExtResource("4_teodf")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TileMap/Campfire"]
+libraries = {
+"": SubResource("AnimationLibrary_j8i5t")
+}
+autoplay = "default"
+
+[node name="Reticle" type="Sprite2D" parent="TileMap"]
+z_index = 1
+texture = ExtResource("11_qalg8")
+centered = false
+hframes = 7
+script = ExtResource("12_cdjpu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TileMap/Reticle"]
+libraries = {
+"": SubResource("AnimationLibrary_4ecem")
+}
+autoplay = "default"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
